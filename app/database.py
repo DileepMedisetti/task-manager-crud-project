@@ -54,7 +54,36 @@ DATABASE_URL = (
 # ==========================================
 # Engine is responsible for creating the
 # connection between FastAPI and MySQL.
-engine = create_engine(DATABASE_URL)
+
+#engine = create_engine(DATABASE_URL)
+
+#=========================
+
+# ==========================================
+# CREATE ENGINE
+# ==========================================
+# Engine is responsible for creating the
+# connection between FastAPI and MySQL.
+#
+# pool_pre_ping=True
+# ------------------
+# Before using a connection, SQLAlchemy checks
+# whether it is still alive.
+#
+# This is useful for cloud databases like
+# Aiven because idle connections can be closed.
+#
+# connect_args
+# ------------
+# Aiven requires SSL for secure communication.
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    connect_args={
+        "ssl": {}
+    }
+)
+#=========================
 
 # ==========================================
 # CREATE SESSION
