@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+
+  mysql:
+    image: mysql:8.0
+
+    container_name: task_manager_mysql
+
+    restart: always
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: task_manager
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+
+  fastapi:
+    build: .
+
+    container_name: task_manager_api
+
+    depends_on:
+      - mysql
+
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - .env
+
+    volumes:
+      - .:/app
+
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+
+volumes:
+
+  mysql_data:
