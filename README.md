@@ -372,4 +372,236 @@ DELETE /tasks/{id}    → Delete a task
 All CRUD operations can be tested directly from the FastAPI Swagger UI without using external tools like Postman.
 
 
+# Running Project on Docker
+# 🐳 Running the Project with Docker
+
+## Step 1: Build the Docker Image
+
+Build the Docker image from the project directory.
+
+```bash
+docker build -t task_management_fastapi_crud_project .
+```
+
+### Explanation
+
+- `docker build` → Builds a Docker image.
+- `-t` → Assigns a name (tag) to the image.
+- `task_management_fastapi_crud_project` → Name of the Docker image.
+- `.` → Uses the current directory as the build context.
+
+---
+
+## Step 2: Verify the Docker Image
+
+```bash
+docker images
+```
+
+This command lists all Docker images available on your system.
+
+Example:
+
+```text
+REPOSITORY                              TAG       IMAGE ID
+task_management_fastapi_crud_project    latest    ff23caff9cf6
+```
+
+---
+
+## Step 3: Run the Docker Container
+
+```bash
+docker run --env-file .env -d -p 8000:8000 --name task-manager-api task_management_fastapi_crud_project
+```
+
+### Explanation
+
+- `docker run` → Creates and starts a container from the image.
+- `--env-file .env` → Loads environment variables from the `.env` file.
+- `-d` → Runs the container in detached (background) mode.
+- `-p 8000:8000` → Maps port 8000 of the host to port 8000 of the container.
+- `--name task-manager-api` → Assigns a custom name to the container.
+- `task_management_fastapi_crud_project` → Name of the Docker image.
+
+---
+
+## Step 4: Verify the Running Container
+
+```bash
+docker ps
+```
+
+This command shows all currently running Docker containers.
+
+Example:
+
+```text
+CONTAINER ID   IMAGE                                  STATUS
+7f2241f53328   task_management_fastapi_crud_project   Up 30 seconds
+```
+
+---
+
+## Step 5: Open the API Documentation
+
+Open your browser and visit:
+
+```
+http://localhost:8000/docs
+```
+
+Swagger UI will open, allowing you to test all CRUD APIs.
+
+---
+
+# Useful Docker Commands
+
+## View Running Containers
+
+```bash
+docker ps
+```
+
+Displays all running containers.
+
+---
+
+## View All Containers
+
+```bash
+docker ps -a
+```
+
+Displays both running and stopped containers.
+
+---
+
+## View Docker Images
+
+```bash
+docker images
+```
+
+Lists all Docker images.
+
+---
+
+## View Container Logs
+
+```bash
+docker logs task-manager-api
+```
+
+Displays application logs from the container.
+
+---
+
+## Stop the Container
+
+```bash
+docker stop task-manager-api
+```
+
+Stops the running container.
+
+---
+
+## Start the Container
+
+```bash
+docker start task-manager-api
+```
+
+Starts an existing stopped container.
+
+---
+
+## Restart the Container
+
+```bash
+docker restart task-manager-api
+```
+
+Restarts the container.
+
+---
+
+## Remove the Container
+
+```bash
+docker rm task-manager-api
+```
+
+Deletes the stopped container.
+
+> **Note:** Stop the container before removing it.
+
+---
+
+## Remove the Docker Image
+
+```bash
+docker rmi task_management_fastapi_crud_project
+```
+
+Deletes the Docker image.
+
+> **Note:** Remove any containers using the image before deleting it.
+
+---
+
+# Complete Docker Workflow
+
+```bash
+# Build Docker Image
+docker build -t task_management_fastapi_crud_project .
+
+# Verify Image
+docker images
+
+# Run Docker Container
+docker run --env-file .env -d -p 8000:8000 --name task-manager-api task_management_fastapi_crud_project
+
+# Verify Running Container
+docker ps
+
+# Open Swagger UI
+http://localhost:8000/docs
+
+# Stop Container
+docker stop task-manager-api
+
+# Start Container
+docker start task-manager-api
+
+# Restart Container
+docker restart task-manager-api
+
+# View Logs
+docker logs task-manager-api
+
+# View All Containers
+docker ps -a
+
+# Remove Container
+docker rm task-manager-api
+
+# Remove Docker Image
+docker rmi task_management_fastapi_crud_project
+```
+
+---
+
+## Environment Variables
+
+This project uses a `.env` file to store sensitive configuration such as database credentials.
+
+Run the container with:
+
+```bash
+docker run --env-file .env -d -p 8000:8000 --name task-manager-api task_management_fastapi_crud_project
+```
+
+The `.env` file is excluded from GitHub using `.gitignore` to protect sensitive information. During deployment (e.g., Render), the same values should be configured as environment variables in the hosting platform instead of uploading the `.env` file.
 
